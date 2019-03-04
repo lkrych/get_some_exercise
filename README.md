@@ -1,4 +1,4 @@
-## 🏃‍♀️ Exercise Generator 🏃
+## 🏃‍♀️ Get Some Exercise 🏃
 
 Run `go run exercise_generator.go` to get started.
 
@@ -15,9 +15,9 @@ Fill in the exercises in `./do_some_exercises/exercises` until all your tests pa
 
 I wrote this on a Mac. To get all the required dependencies, use homebrew
 
-`brew install go`
-`brew install python`
-`brew install cunit` - C unit testing framework
-`brew install elixir`
+* `brew install go`
+* `brew install python`
+* `brew install cunit` - C unit testing framework
+* `brew install elixir`
 
 
