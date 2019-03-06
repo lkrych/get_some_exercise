@@ -21,7 +21,7 @@ func GetFileSuffix(language string) string {
 }
 
 // print funcs for formatting
-func printSpace() {
+func PrintSpace() {
 	fmt.Printf("\n")
 }
 
@@ -33,7 +33,7 @@ func FormatPrint(printThis string) {
 	printBorder()
 	fmt.Println(printThis)
 	printBorder()
-	printSpace()
+	PrintSpace()
 }
 
 //
