@@ -1,7 +1,8 @@
 package goExercises
 
-//implement a data structure stackOfStacks (setOfStacks really) that is composed of
-//several stacks and should create a new stack once the previous one exceeds capacity
-//push and pop should behave identically to a single stack
-type stackOfStacks struct{}
+//implement an algorithm to delete a node (any node but the first and last node)
+// of a singly-linked list, given only access to that list
+func deleteMiddle(n *Node) {
+
+}
  
