@@ -1,8 +1,9 @@
-package util
+package main
 
 import (
 	"bufio"
 	"fmt"
+	"get_some_exercise/util"
 	"os"
 	"regexp"
 )
@@ -17,12 +18,14 @@ func main() {
 func getName(r *bufio.Reader) string {
 	fmt.Print("What is the name of your exercise? (exclude the file suffix) ")
 	name, err := r.ReadString('\n')
-	CheckErr(err)
+	re := regexp.MustCompile(`\r?\n`)
+	name = re.ReplaceAllString(name, "")
+	util.CheckErr(err)
 	for {
-		printSpace()
+		util.PrintSpace()
 		fmt.Printf("Are you sure you want to call your exericise: %v y/n ", name)
 		yesOrNo, err := r.ReadString('\n')
-		CheckErr(err)
+		util.CheckErr(err)
 
 		match, err := regexp.MatchString("y|n", yesOrNo)
 		if match {
@@ -31,7 +34,7 @@ func getName(r *bufio.Reader) string {
 				break
 			}
 		} else {
-			FormatPrint("You need to indicate y or n. Please try again.")
+			util.FormatPrint("You need to indicate y or n. Please try again.")
 			fmt.Print("What is the name of your exercise? (exclude the file suffix) ")
 			name, err = r.ReadString('\n')
 		}
@@ -42,11 +45,11 @@ func getName(r *bufio.Reader) string {
 func createNewFiles(name string, r *bufio.Reader) {
 
 	for {
-		fmt.Print("Does this exercise already exist in the go language folder? y/n")
+		util.FormatPrint("Does this exercise already exist in the go language folder? y/n ")
 		exists, err := r.ReadString('\n')
 
 		if err != nil {
-			FormatPrint("There was an error reading your input, try again.")
+			util.FormatPrint("There was an error reading your input, try again.")
 		}
 
 		match, err := regexp.MatchString("y|n", exists)
@@ -54,11 +57,13 @@ func createNewFiles(name string, r *bufio.Reader) {
 			match, err = regexp.MatchString("y", exists)
 			if match {
 				createEverythingButGo(name)
+				break
 			} else {
 				createEverything(name)
+				break
 			}
 		} else {
-			FormatPrint("You need to indicate y or n. Please try again.")
+			util.FormatPrint("You need to indicate y or n. Please try again.")
 		}
 	}
 }
@@ -73,18 +78,18 @@ func createEverythingButGo(name string) {
 
 func createFiles(name string, langArray []string) {
 	for _, lang := range langArray {
-		suffix := GetFileSuffix(lang)
-		execsFile := fmt.Sprintf("../languages/%v/exercises_itemized/%v.%v", lang, name, suffix)
+		suffix := util.GetFileSuffix(lang)
+		execsFile := fmt.Sprintf("../../languages/%v/exercises_itemized/%v%v", lang, name, suffix)
 		execs, err := os.Create(execsFile)
-		CheckErr(err)
+		util.CheckErr(err)
 		execs.Close()
-		testFile := fmt.Sprintf("../languages/%v/exercises_test/%v_test.%v", lang, name, suffix)
+		testFile := fmt.Sprintf("../../languages/%v/exercises_test/%v_test%v", lang, name, suffix)
 		tests, err := os.Create(testFile)
-		CheckErr(err)
+		util.CheckErr(err)
 		tests.Close()
-		solnsFile := fmt.Sprintf("../languages/%v/exercises_solutions/%v_soln.%v", lang, name, suffix)
+		solnsFile := fmt.Sprintf("../../languages/%v/exercises_solutions/%v_soln%v", lang, name, suffix)
 		solns, err := os.Create(solnsFile)
-		CheckErr(err)
+		util.CheckErr(err)
 		solns.Close()
 	}
 }
