@@ -5,7 +5,7 @@ func TestRotateMatrix(t *testing.T) {
 
 	ans1 := [][]int{{1, 0, 3}, {0, 0, 0}, {1, 0, 3}}
 	ans2 := []][]int{{1, 0, 3, 4}, {0, 0, 0, 0}, {1, 0, 3, 4}, {1, 0, 3, 4}}
-	ans3 := [][]{{2, 1}, {2, 1}}
+	ans3 := [][]int{{2, 1}, {2, 1}}
 	if !cmp.Equal(test1, ans1) {
 		t.Errorf("Expected zeroMatrix to zero the matrix %v into %v", test1, ans1)
 	}
