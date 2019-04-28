@@ -8,8 +8,9 @@ To test your code, navigate into the `./do_some_exercises` folder and use the ma
 
 * Go: `make go`
 * Python: `make python`
-* C: `make c`
-* Elixir: `make elixir`
+* C: `make c` ~ no exercises yet
+* Elixir: `make elixir` ~ no exercises yet
+* OCAML: `make ocaml`
 
 Fill in the exercises in `./do_some_exercises/exercises` until all your tests pass.
 
@@ -19,5 +20,6 @@ I wrote this on a Mac. To get all the required dependencies, use homebrew
 * `brew install python`
 * `brew install cunit` - C unit testing framework
 * `brew install elixir`
+* `brew install ocaml`
 
 
