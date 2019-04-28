@@ -14,6 +14,10 @@ import (
 )
 
 func main() {
+	//clean up old exercises if they exist
+	err := util.RemoveOldExercises()
+	util.CheckErr(err)
+
 	//ask for number of Exercises
 	numExercises := askForExercises()
 	//ask for language
@@ -54,20 +58,21 @@ func askForExercises() int {
 //use stdinnput to ask for language of Exercises to practice
 func askForLanguage() string {
 	language := "go" // default to go
-	for {            //iterate until language is picked
+
+	for { //iterate until language is picked
 		reader := bufio.NewReader(os.Stdin)
 
-		fmt.Print("Enter language you want to practice (python, go, c, elixir): ")
-		language, err := reader.ReadString('\n')
-		if err != nil {
-			util.FormatPrint("There was an error reading your input")
-		}
+		fmt.Print("Enter language you want to practice (python, go, c, elixir, ocaml): ")
+		language, _ = reader.ReadString('\n')
 
-		match, _ := regexp.MatchString("python|go|c|elixir", language)
+		//strip whitespace from user input
+		language = strings.TrimSpace(language)
+
+		match, _ := regexp.MatchString("python|go|c|elixir|ocaml|", language)
 		if match {
 			break
 		} else {
-			util.FormatPrint("You need to pick either python, go, c, or elixir")
+			util.FormatPrint("You need to pick either python, go, c, elixir, or ocaml")
 			fmt.Printf("You printed %v", language)
 		}
 	}
@@ -76,11 +81,11 @@ func askForLanguage() string {
 
 func makeExercises(numExercises int, language string) {
 
-	//create directory and files
-	filePaths := createFiles(language)
-
 	//get fileSuffix
 	fileSuffix := util.GetFileSuffix(language)
+
+	//create directory and files
+	filePaths := createFiles(fileSuffix)
 
 	//read exercises
 	exercisesPath := fmt.Sprintf("./languages/%v/exercises_itemized", language)
@@ -151,15 +156,15 @@ func makeExercises(numExercises int, language string) {
 
 func createFiles(suffix string) *filePaths {
 	os.Mkdir("./do_some_exercises", os.ModePerm)
-	execsFile := fmt.Sprintf("./do_some_exercises/exercises.%v", suffix)
+	execsFile := fmt.Sprintf("./do_some_exercises/exercises%v", suffix)
 	execs, err := os.Create(execsFile)
 	util.CheckErr(err)
 	execs.Close()
-	testFile := fmt.Sprintf("./do_some_exercises/exercises_test.%v", suffix)
+	testFile := fmt.Sprintf("./do_some_exercises/exercises_test%v", suffix)
 	tests, err := os.Create(testFile)
 	util.CheckErr(err)
 	tests.Close()
-	solnsFile := fmt.Sprintf("./do_some_exercises/exercises_solns.%v", suffix)
+	solnsFile := fmt.Sprintf("./do_some_exercises/exercises_solns%v", suffix)
 	solns, err := os.Create(solnsFile)
 	util.CheckErr(err)
 	solns.Close()
@@ -215,6 +220,8 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 		initFilesC(exerciseFile, testFile, solnFile)
 	case "elixir":
 		initFilesElixir(exerciseFile, testFile, solnFile)
+	case "ocaml":
+		initFilesOcaml(exerciseFile, testFile, solnFile)
 	}
 }
 
@@ -235,6 +242,13 @@ func initFilesPython(exerciseFile, testFile, solnFile *os.File) {
 	_, err := testFile.Write([]byte("import unittest\n\n"))
 	util.CheckErr(err)
 	_, err = testFile.Write([]byte("from exercises import *\n\n"))
+	util.CheckErr(err)
+}
+
+func initFilesOcaml(exerciseFile, testFile, solnFile *os.File) {
+	_, err := testFile.Write([]byte("open OUnit2;;\n\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("open Exercises;;\n\n"))
 	util.CheckErr(err)
 }
 
@@ -326,5 +340,17 @@ func createMakeFile() {
 	_, err = makeFile.Write([]byte("elixir:\n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("\telixir -r exercises.ex exercises_test.exs\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("ocaml:\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\tocaml_build ocaml_run\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("ocaml_build:\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\tocamlbuild -pkgs OUnit exercises_test.byte\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("ocaml_run:\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\t./exercises_test.byte\n"))
 	util.CheckErr(err)
 }
