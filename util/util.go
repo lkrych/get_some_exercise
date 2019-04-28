@@ -3,9 +3,12 @@ package util
 import (
 	"fmt"
 	"log"
+	"os"
+	"path/filepath"
 )
 
 func GetFileSuffix(language string) string {
+
 	switch language {
 	case "python":
 		return ".py"
@@ -15,6 +18,8 @@ func GetFileSuffix(language string) string {
 		return ".c"
 	case "elixir":
 		return ".ex"
+	case "ocaml":
+		return ".ml"
 	}
 	//default to go
 	return ".go"
@@ -42,4 +47,24 @@ func CheckErr(e error) {
 		log.Fatal(e)
 		panic(e)
 	}
+}
+
+func RemoveOldExercises() error {
+	dir := "./do_some_exercises"
+	d, err := os.Open(dir)
+	if err != nil {
+		return err
+	}
+	defer d.Close()
+	names, err := d.Readdirnames(-1)
+	if err != nil {
+		return err
+	}
+	for _, name := range names {
+		err = os.RemoveAll(filepath.Join(dir, name))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
