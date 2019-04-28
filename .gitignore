@@ -1,0 +1,11 @@
+# ignore all the ocaml build stuff
+*~
+*.cmi
+*.cmo
+*.depends
+*.byte
+_digests
+_log
+oUnit*
+ocamlc*
+_build
