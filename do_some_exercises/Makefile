@@ -10,4 +10,3 @@ ocaml_build:
 	ocamlbuild -pkgs OUnit exercises_test.byte
 ocaml_run:
 	./exercises_test.byte
-
