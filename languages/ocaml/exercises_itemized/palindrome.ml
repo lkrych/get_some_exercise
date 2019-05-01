@@ -1,0 +1,1 @@
+(* return if list is palindrome or not *)
