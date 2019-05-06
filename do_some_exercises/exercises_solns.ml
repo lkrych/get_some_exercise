@@ -1,10 +1,6 @@
 (*
-let rec last = function
-  | [] -> None
-  | x :: [] -> Some x
-  | x :: tail -> last tail
-
-let test1 = last [ "a"; "b"; "c"; "d"] = Some "d"
+let rec kth_element k = function
+  [] -> None
+  | k' :: ks' -> if k = 1 then Some k' else kth_element (k-1) ks'  
 *)
-
  
