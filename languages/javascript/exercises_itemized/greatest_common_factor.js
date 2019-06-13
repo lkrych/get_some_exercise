@@ -1,4 +1,4 @@
-// Find the greatest common factors of x, return them in an array
-function greatestCommonFactor(x){
+// Find the greatest common factor of x and y
+function greatestCommonFactor(x, y){
     
 }
