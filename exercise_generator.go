@@ -62,17 +62,17 @@ func askForLanguage() string {
 	for { //iterate until language is picked
 		reader := bufio.NewReader(os.Stdin)
 
-		fmt.Print("Enter language you want to practice (python, go, c, elixir, ocaml): ")
+		fmt.Print("Enter language you want to practice (python, go, c, elixir, ocaml, javascript): ")
 		language, _ = reader.ReadString('\n')
 
 		//strip whitespace from user input
 		language = strings.TrimSpace(language)
 
-		match, _ := regexp.MatchString("python|go|c|elixir|ocaml|", language)
+		match, _ := regexp.MatchString("python|go|c|elixir|ocaml|javascript|", language)
 		if match {
 			break
 		} else {
-			util.FormatPrint("You need to pick either python, go, c, elixir, or ocaml")
+			util.FormatPrint("You need to pick either python, go, c, javascript, elixir, or ocaml")
 			fmt.Printf("You printed %v", language)
 		}
 	}
@@ -222,6 +222,8 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 		initFilesElixir(exerciseFile, testFile, solnFile)
 	case "ocaml":
 		initFilesOcaml(exerciseFile, testFile, solnFile)
+	case "javascript":
+		initFilesJavascript(exerciseFile, testFile, solnFile)
 	}
 }
 
@@ -277,6 +279,11 @@ func initFilesElixir(exerciseFile, testFile, solnFile *os.File) {
 	_, err = testFile.Write([]byte("defmodule TestExercises do\n"))
 	util.CheckErr(err)
 	_, err = testFile.Write([]byte("\tuse ExUnit.Case, async: true\n\n"))
+	util.CheckErr(err)
+}
+
+func initFilesJavascript(exerciseFile, testFile, solnFile *os.File) {
+	_, err := testFile.Write([]byte("var test = require('tape'); \n"))
 	util.CheckErr(err)
 }
 
