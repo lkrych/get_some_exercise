@@ -20,6 +20,8 @@ func GetFileSuffix(language string) string {
 		return ".ex"
 	case "ocaml":
 		return ".ml"
+	case "javascript":
+		return ".js"
 	}
 	//default to go
 	return ".go"
