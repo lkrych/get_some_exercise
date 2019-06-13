@@ -9,3 +9,6 @@ _log
 oUnit*
 ocamlc*
 _build
+
+# ignore node_modules
+node_modules
