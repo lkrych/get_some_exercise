@@ -22,4 +22,8 @@ I wrote this on a Mac. To get all the required dependencies, use homebrew
 * `brew install elixir`
 * `brew install ocaml`
 
+### Want to add exercises to the languages that already exist?
 
+Use the `generate_ex_sol_test.py` script in the utilities folder. 
+
+Coming soon: Programatically generate your own language support :)
