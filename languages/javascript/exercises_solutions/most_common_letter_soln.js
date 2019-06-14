@@ -1,0 +1,3 @@
+function mostCommonLetter(string){
+    
+}

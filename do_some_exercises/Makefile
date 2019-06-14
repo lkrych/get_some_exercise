@@ -1,5 +1,7 @@
 go:
 	go test 
+javascript:
+	node -r esm exercises_test.js | ../node_modules/.bin/tap-dot
 python:
 	python exercises_test.py 
 c:

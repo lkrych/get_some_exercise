@@ -17,13 +17,15 @@ func main() {
 	//clean up old exercises if they exist
 	err := util.RemoveOldExercises()
 	util.CheckErr(err)
-
+	fmt.Print("🏃‍♀️ Get Some Exercise 🏃\n")
+	util.PrintSpace()
 	//ask for number of Exercises
 	numExercises := askForExercises()
 	//ask for language
 	language := askForLanguage()
 	//create quiz folder with exercises and tests
 	makeExercises(numExercises, language)
+	fmt.Print("🏃‍♀️ Your files have been written in ./do_some_exercises. It's time to get running 🏃\n")
 }
 
 type filePaths struct {
@@ -62,17 +64,17 @@ func askForLanguage() string {
 	for { //iterate until language is picked
 		reader := bufio.NewReader(os.Stdin)
 
-		fmt.Print("Enter language you want to practice (python, go, c, elixir, ocaml): ")
+		fmt.Print("Enter language you want to practice (python, go, c, elixir, ocaml, javascript): ")
 		language, _ = reader.ReadString('\n')
 
 		//strip whitespace from user input
 		language = strings.TrimSpace(language)
 
-		match, _ := regexp.MatchString("python|go|c|elixir|ocaml|", language)
+		match, _ := regexp.MatchString("python|go|c|elixir|ocaml|javascript|", language)
 		if match {
 			break
 		} else {
-			util.FormatPrint("You need to pick either python, go, c, elixir, or ocaml")
+			util.FormatPrint("You need to pick either python, go, c, javascript, elixir, or ocaml")
 			fmt.Printf("You printed %v", language)
 		}
 	}
@@ -222,6 +224,8 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 		initFilesElixir(exerciseFile, testFile, solnFile)
 	case "ocaml":
 		initFilesOcaml(exerciseFile, testFile, solnFile)
+	case "javascript":
+		initFilesJavascript(exerciseFile, testFile, solnFile)
 	}
 }
 
@@ -280,6 +284,11 @@ func initFilesElixir(exerciseFile, testFile, solnFile *os.File) {
 	util.CheckErr(err)
 }
 
+func initFilesJavascript(exerciseFile, testFile, solnFile *os.File) {
+	_, err := testFile.Write([]byte("var test = require('tape'); \n"))
+	util.CheckErr(err)
+}
+
 func finishTestFileC(testFile *os.File) {
 	_, err := testFile.Write([]byte("/************* Test Runner Code goes here **************/\n\n"))
 	util.CheckErr(err)
@@ -328,6 +337,10 @@ func createMakeFile() {
 	_, err = makeFile.Write([]byte("go:\n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("\tgo test \n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("javascript:\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\tnode -r esm exercises_test.js | ../node_modules/.bin/tap-dot \n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("python:\n"))
 	util.CheckErr(err)

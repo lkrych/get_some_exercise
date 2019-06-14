@@ -1,3 +1,4 @@
+var test = require('tape'); 
 import { palindrome } from './exercises';
 
 
@@ -7,3 +8,4 @@ test('palindrome test', function(t) {
     t.equal(palindrome("racecar"), true);
     t.equal(palindrome("z"), true);
 });
+ 
