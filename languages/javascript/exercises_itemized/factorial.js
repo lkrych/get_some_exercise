@@ -1,4 +1,4 @@
 // return the factorial of x
-function factorial(x){
+export function factorial(x){
     
 }

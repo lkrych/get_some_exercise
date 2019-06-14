@@ -1,4 +1,4 @@
 //return the nth prime
-function nthPrime(n) {
+export function nthPrime(n) {
     
 }

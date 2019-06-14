@@ -1,4 +1,4 @@
 //return the nth fibonacci
-function fibonacci(n) {
+export function fibonacci(n) {
     
 }

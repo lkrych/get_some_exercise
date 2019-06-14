@@ -3,6 +3,6 @@
 // # the string contains only lowercase letters. Count the number of
 // # letters that repeat, not the number of times they repeat in the
 // # string.
-function numRepeatedLetters(){
+export function numRepeatedLetters(){
     
 }
