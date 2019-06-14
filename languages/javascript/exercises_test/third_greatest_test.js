@@ -1,4 +1,4 @@
-import { thirdGreatest } from '../exercises_itemized/third_greatest';
+import { thirdGreatest } from './exercises';
 
 
 test('thirdGreatest test', function(t) {

@@ -1,4 +1,4 @@
-import { twoSum } from '../exercises_itemized/two_sum';
+import { twoSum } from './exercises';
 
 test('twoSum test', function(t) {
     t.plan(3);

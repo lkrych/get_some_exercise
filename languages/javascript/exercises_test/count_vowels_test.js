@@ -1,4 +1,4 @@
-import { countVowels } from '../exercises_itemized/count_vowels';
+import { countVowels } from './exercises';
 
 
 test('countVowels test', function(t) {

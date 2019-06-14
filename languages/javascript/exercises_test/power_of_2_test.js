@@ -1,4 +1,4 @@
-import { powerOfTwo } from '../exercises_itemized/power_of_2';
+import { powerOfTwo } from './exercises';
 
 
 test('powerOfTwo test', function(t) {

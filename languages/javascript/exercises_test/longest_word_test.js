@@ -1,4 +1,4 @@
-import { longestWord } from '../exercises_itemized/longest_word';
+import { longestWord } from './exercises';
 
 
 test('longestWord test', function(t) {

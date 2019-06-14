@@ -1,4 +1,4 @@
-import { caesarCipher } from '../exercises_itemized/caesar_cipher';
+import { caesarCipher } from './exercises';
 
 
 test('caesarCipher test', function(t) {

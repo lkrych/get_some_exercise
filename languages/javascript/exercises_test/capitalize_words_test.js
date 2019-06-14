@@ -1,4 +1,4 @@
-import { capitalizeWords } from '../exercises_itemized/capitalize_words';
+import { capitalizeWords } from './exercises';
 
 
 test('capitalizeWords test', function(t) {

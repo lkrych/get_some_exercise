@@ -1,4 +1,4 @@
-import { fibonacci } from '../exercises_itemized/fibonacci';
+import { fibonacci } from './exercises';
 
 
 test('fibonacci test', function(t) {

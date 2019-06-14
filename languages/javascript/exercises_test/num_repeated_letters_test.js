@@ -1,4 +1,4 @@
-import { numRepeatedLetters } from '../exercises_itemized/num_repeated_letters';
+import { numRepeatedLetters } from './exercises';
 
 
 test('numRepeatedLetters test', function(t) {

@@ -1,4 +1,4 @@
-import { reverse } from '../exercises_itemized/reverse';
+import { reverse } from './exercises';
 
 
 test('reverse test', function(t) {

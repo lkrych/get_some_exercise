@@ -1,4 +1,4 @@
-import { greatestCommonFactor } from '../exercises_itemized/greatest_common_factor';
+import { greatestCommonFactor } from './exercises';
 
 
 test('greatestCommonFactor test', function(t) {

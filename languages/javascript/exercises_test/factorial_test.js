@@ -1,4 +1,4 @@
-import { factorial } from '../exercises_itemized/factorial';
+import { factorial } from './exercises';
 
 
 test('factorial test', function(t) {

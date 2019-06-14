@@ -1,4 +1,4 @@
-import { isPrime } from '../exercises_itemized/is_prime';
+import { isPrime } from './exercises';
 
 
 test('isPrime test', function(t) {

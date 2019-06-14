@@ -1,4 +1,4 @@
-import { scrambleString } from '../exercises_itemized/scramble_string';
+import { scrambleString } from './exercises';
 
 
 test('scrambleString test', function(t) {

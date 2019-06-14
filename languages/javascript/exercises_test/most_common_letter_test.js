@@ -1,4 +1,4 @@
-import { mostCommonLetter } from '../exercises_itemized/most_common_letter';
+import { mostCommonLetter } from './exercises';
 
 
 test('mostCommonLetter test', function(t) {

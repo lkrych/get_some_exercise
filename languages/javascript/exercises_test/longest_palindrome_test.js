@@ -1,4 +1,4 @@
-import { longestPalindrome } from '../exercises_itemized/longest_palindrome';
+import { longestPalindrome } from './exercises';
 
 
 test('longestPalindrome test', function(t) {

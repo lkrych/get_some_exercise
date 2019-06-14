@@ -1,4 +1,4 @@
-import { sumNums } from '../exercises_itemized/sum_nums';
+import { sumNums } from './exercises';
 
 
 test('sumNums test', function(t) {

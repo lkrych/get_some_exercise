@@ -1,4 +1,4 @@
-import { palindrome } from '../exercises_itemized/palindrome';
+import { palindrome } from './exercises';
 
 
 test('palindrome test', function(t) {

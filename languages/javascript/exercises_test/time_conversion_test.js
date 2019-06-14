@@ -1,4 +1,4 @@
-import { timeConversion } from '../exercises_itemized/time_conversion';
+import { timeConversion } from './exercises';
 
 
 test('timeConversion test', function(t) {

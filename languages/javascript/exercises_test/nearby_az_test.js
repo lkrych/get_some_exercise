@@ -1,4 +1,4 @@
-import { nearbyAZ } from '../exercises_itemized/nearby_az';
+import { nearbyAZ } from './exercises';
 
 
 test('nearbyAZ test', function(t) {
