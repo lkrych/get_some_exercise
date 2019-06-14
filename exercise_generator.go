@@ -340,7 +340,7 @@ func createMakeFile() {
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("javascript:\n"))
 	util.CheckErr(err)
-	_, err = makeFile.Write([]byte("\tnode exercises_test.js \n"))
+	_, err = makeFile.Write([]byte("\tnode -r esm exercises_test.js | ../node_modules/.bin/tap-dot \n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("python:\n"))
 	util.CheckErr(err)
