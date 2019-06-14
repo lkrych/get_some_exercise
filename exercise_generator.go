@@ -17,13 +17,15 @@ func main() {
 	//clean up old exercises if they exist
 	err := util.RemoveOldExercises()
 	util.CheckErr(err)
-
+	fmt.Print("🏃‍♀️ Get Some Exercise 🏃\n")
+	util.PrintSpace()
 	//ask for number of Exercises
 	numExercises := askForExercises()
 	//ask for language
 	language := askForLanguage()
 	//create quiz folder with exercises and tests
 	makeExercises(numExercises, language)
+	fmt.Print("🏃‍♀️ Your files have been written in ./do_some_exercises. It's time to get running 🏃\n")
 }
 
 type filePaths struct {
@@ -335,6 +337,10 @@ func createMakeFile() {
 	_, err = makeFile.Write([]byte("go:\n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("\tgo test \n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("javascript:\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\tnode exercises_test.js \n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("python:\n"))
 	util.CheckErr(err)
