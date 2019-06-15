@@ -12,3 +12,7 @@ _build
 
 # ignore node_modules
 node_modules
+
+#ignore package.json
+package.json
+package-lock.json

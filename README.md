@@ -31,8 +31,7 @@ I wrote this on a Mac. To get all the required dependencies, use homebrew
 
 ### js
 * `brew install node`
-* `brew install yarn`
-* `yarn install`
+* `npm install`
 
 ### python
 * `brew install python`
