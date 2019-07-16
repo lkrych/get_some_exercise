@@ -355,7 +355,7 @@ func createMakeFile() {
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("python:\n"))
 	util.CheckErr(err)
-	_, err = makeFile.Write([]byte("\tpython exercises_test.py \n"))
+	_, err = makeFile.Write([]byte("\tpython -m unittest exercises_test.py  \n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("c:\n"))
 	util.CheckErr(err)
