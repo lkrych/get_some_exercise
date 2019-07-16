@@ -151,6 +151,8 @@ func makeExercises(numExercises int, language string) {
 		finishTestFileC(testFile)
 	case "elixir":
 		finishTestFileElixir(testFile)
+	case "python":
+		finishTestFilePython(testFile)
 	}
 
 	createMakeFile()
@@ -323,6 +325,15 @@ func finishTestFileC(testFile *os.File) {
 
 }
 
+func finishTestFilePython(testFile *os.File) {
+	_, err := testFile.Write([]byte("\n\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("if __name__ == '__main__':\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("\tunittest.main()"))
+	util.CheckErr(err)
+}
+
 func finishTestFileElixir(testFile *os.File) {
 	_, err := testFile.Write([]byte("end"))
 	util.CheckErr(err)
@@ -344,7 +355,7 @@ func createMakeFile() {
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("python:\n"))
 	util.CheckErr(err)
-	_, err = makeFile.Write([]byte("\tpython exercises_test.py \n"))
+	_, err = makeFile.Write([]byte("\tpython -m unittest exercises_test.py  \n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("c:\n"))
 	util.CheckErr(err)
