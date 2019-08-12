@@ -4,7 +4,7 @@ class TestSwapBits(unittest.TestCase):
         Test that swap_bits can handle small integers
         """
         result = swap_bits(5, 5, 12)
-        self.assertEqual(result, )
+        self.assertEqual(result, 4097)
 
     def test_6(self):
         """
