@@ -10,8 +10,8 @@ class TestSwapBits(unittest.TestCase):
         """
         Test that swap_bits can handle small integers
         """
-        result = swap_bits(6, 6, 7)
-        self.assertEqual(result, )
+        result = swap_bits(6, 6, 1)
+        self.assertEqual(result, 68)
 
     def test_8(self):
         """
