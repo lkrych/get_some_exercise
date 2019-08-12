@@ -3,6 +3,6 @@
 #     if (x >> i) & 1 != (x >> j) & 1:
 #         # swap by flipping their values
 #         # select bits to flip with bit_mask
-#         bit_mask = (1 << i) | (1 << j)
+#         bit_mask = (1 << i) | (1 << j) #bitwise or of the two masks
 #         x ^= bit_mask
 #     return x

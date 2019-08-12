@@ -17,11 +17,11 @@ class TestSwapBits(unittest.TestCase):
         """
         Test that swap_bits can handle small integers
         """
-        result = swap_bits(8, 8 , 32)
-        self.assertEqual(result, 8 , 32)
+        result = swap_bits(8, 3 , 8)
+        self.assertEqual(result, 256)
     def test_65536(self):
         """
         Test that swap_bits can handle larger integers
         """
-        result = swap_bits(65536, 64, 32)
-        self.assertEqual(result, 1)
+        result = swap_bits(65536, 16, 17)
+        self.assertEqual(result, 131702)
