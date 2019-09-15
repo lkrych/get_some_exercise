@@ -3,7 +3,7 @@ go:
 javascript:
 	node -r esm exercises_test.js | ../node_modules/.bin/tap-dot 
 python:
-	python exercises_test.py 
+	python -m unittest exercises_test.py  
 c:
 	gcc exercises_test.c -lcunit -o test ./test 
 elixir:

@@ -2,24 +2,35 @@ import unittest
 
 from exercises import *
 
-class TestBubbleSort(unittest.TestCase):
-    def test_small_list(self):
+class TestParity(unittest.TestCase):
+    def test_5(self):
         """
-        Test that it can sort a small list of integers
+        Test that parity can handle small integers
         """
-        data = [5, 6, 4, 3, 2, 1,]
-        result = bubble_sort(data)
-        self.assertEqual(result, [1,2,3,4,5,6])
+        result = parity(5)
+        self.assertEqual(result, 0)
 
-    def test_bigger_list(self):
+    def test_6(self):
         """
-        Test that it can sort a bigger list of integers
+        Test that parity can handle small integers
         """
-        data = [5, 6, 4, 3, 7, 8, 9, 2, 1, 10]
-        result = bubble_sort(data)
-        self.assertEqual(result, [1,2,3,4,5,6,7,8,9,10])
+        result = parity(6)
+        self.assertEqual(result, 0)
+
+    def test_8(self):
+        """
+        Test that parity can handle small integers
+        """
+        result = parity(8)
+        self.assertEqual(result, 1)
+    def test_65536(self):
+        """
+        Test that parity can handle larger integers
+        """
+        result = parity(65536)
+        self.assertEqual(result, 1)
  
 
 
 if __name__ == '__main__':
-    unittest.main()
+	unittest.main()
