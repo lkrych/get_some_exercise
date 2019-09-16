@@ -1,8 +1,8 @@
-# The parity of a binary value is 1 if the number of 1s in the word is odd 
-def parity(x:int) -> int:
-    result = 0
-    while x > 0:
-        result ^= x & 1
-        x = x >> 1
-    return result
+#given two positive integers, compute their quotient using only the addition, subtraction and shifting operators
+def divide(x: int, y: int) -> int:
+    q = 0
+    while x >= y:
+        x -= y
+        q += 1
+    return q
  
