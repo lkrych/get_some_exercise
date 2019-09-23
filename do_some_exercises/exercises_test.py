@@ -2,33 +2,22 @@ import unittest
 
 from exercises import *
 
-class TestDivide(unittest.TestCase):
-    def test_5(self):
+class TestMergeSort(unittest.TestCase):
+    def test_small_list(self):
         """
-        Test that divide can handle small integers
+        Test that it can sort a small list of integers
         """
-        result = divide(10, 2)
-        self.assertEqual(result, 5)
+        data = [5, 6, 4, 3, 2, 1,]
+        result = merge_sort(data)
+        self.assertEqual(result, [1,2,3,4,5,6])
 
-    def test_6(self):
+    def test_bigger_list(self):
         """
-        Test that divide can handle small integers
+        Test that it can sort a bigger list of integers
         """
-        result = divide(15, 3)
-        self.assertEqual(result, 5)
-
-    def test_8(self):
-        """
-        Test that divide can handle small integers
-        """
-        result = divide(360, 8)
-        self.assertEqual(result, 45)
-    def test_65536(self):
-        """
-        Test that divide can handle larger integers
-        """
-        result = divide(65536, 4)
-        self.assertEqual(result, 16384)
+        data = [5, 6, 4, 3, 7, 8, 9, 2, 1, 10]
+        result = merge_sort(data)
+        self.assertEqual(result, [1,2,3,4,5,6,7,8,9,10])
  
 
 

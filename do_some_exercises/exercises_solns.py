@@ -1,23 +1,42 @@
-# a brute force approach would iteratively subtract y from x until what remains is less than y
-# the number of the subtractions is the quotient
-# this is really inefficient if say y equals 1, it will take 2 ^ x iterations
+# #merge sort
+# def merge_sort(arr):
+#   #base case, the arr is sorted if it is of length 1 or 0
+#   if len(arr) < 2: 
+#     return arr
+  
+#   #divide the array in two
+#   mid_idx = len(arr) // 2
+#   left_arr = arr[: mid_idx]
+#   right_arr = arr[mid_idx :]
 
-# a better approach is to subtract more in each iteration
-# we can compute the largest k such that 2^k*y is less than or equal to x, subtract from x
-# we can then add 2^k to the quotient
+#   #recursively sort the two arrays
+#   sorted_left_arr = merge_sort(left_arr)
+#   sorted_right_arr = merge_sort(right_arr)
 
-def divide(x: int, y: int) -> int:
-    result, power = 0, 32
-    y_power = y << power
-    while x >= y:
-        while y_power > x:
-            y_power >>= 1
-            power -=1
-        
-        result += 1 << power
-        x -= y_power
-    return result
+#   #use helper function to merge the two sorted arrays
+#   return merge(sorted_left_arr, sorted_right_arr)
 
+# #helper function for merge sort
+# def merge(arr1, arr2):
+#   merged = []
+#   i = 0 #init indices
+#   j = 0
+#   while len(merged) < len(arr1) + len(arr2):
+#     #if either array has been completely checked, add the other array to merged
+#     if i >= len(arr1):
+#       merged.extend(arr2[j:])
+#       return merged
+#     elif j >= len(arr2):
+#       merged.extend(arr1[i:])
+#       return merged
 
+#     #if neither array is empty, check which element is smaller and add to merged
+#     if arr1[i] > arr2[j]:
+#       merged.append(arr2[j])
+#       j+=1
+#     else:
+#       merged.append(arr1[i])
+#       i+=1
 
+#   return merged
  
