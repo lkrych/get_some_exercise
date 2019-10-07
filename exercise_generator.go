@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"os"
+	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
@@ -154,7 +155,7 @@ func makeExercises(numExercises int, language string) {
 	case "python":
 		finishTestFilePython(testFile)
 	}
-
+	createHelperFile(fileSuffix)
 	createMakeFile()
 }
 
@@ -228,6 +229,19 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 		initFilesOcaml(exerciseFile, testFile, solnFile)
 	case "javascript":
 		initFilesJavascript(exerciseFile, testFile, solnFile)
+	}
+}
+
+func createHelperFile(fileSuffix string) {
+	src := fmt.Sprintf("./util/helper/helper%v", fileSuffix)
+	dst := fmt.Sprintf("./do_some_exercises/helper%v", fileSuffix)
+	if fileSuffix != ".py" {
+		return
+	}
+	cpCmd := exec.Command("cp", "-rf", src, dst)
+	err := cpCmd.Run()
+	if err != nil {
+		util.CheckErr(err)
 	}
 }
 
