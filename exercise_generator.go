@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"os"
+	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
@@ -19,12 +20,23 @@ func main() {
 	util.CheckErr(err)
 	fmt.Print("🏃‍♀️ Get Some Exercise 🏃\n")
 	util.PrintSpace()
-	//ask for number of Exercises
-	numExercises := askForExercises()
-	//ask for language
-	language := askForLanguage()
-	//create quiz folder with exercises and tests
-	makeExercises(numExercises, language)
+	// ask for mode
+	mode := askForMode()
+	if mode == "random" {
+		//ask for number of Exercises
+		numExercises := askForExercises()
+		//ask for language
+		language := askForLanguage()
+		//create quiz folder with exercises and tests
+		makeExercises(numExercises, language)
+	} else if mode == "targeted" {
+		//ask for language
+		language := askForLanguage()
+		//ask for exercise
+		exercise := askForExercise(language)
+		//make excercise
+		makeExercise(exercise, language)
+	}
 	fmt.Print("🏃‍♀️ Your files have been written in ./do_some_exercises. It's time to get running 🏃\n")
 }
 
@@ -32,6 +44,65 @@ type filePaths struct {
 	exerciseFile string
 	testFile     string
 	solnsFile    string
+}
+
+//use stdinput to ask for random or targeted questions
+func askForMode() string {
+	mode := "random" // default to random
+
+	for { //iterate until mode is picked
+		reader := bufio.NewReader(os.Stdin)
+
+		fmt.Printf("Targeted: Practice a specific exercise \n")
+		fmt.Printf("Random: Pick number of exercises and language\n")
+		util.PrintSpace()
+		fmt.Print("Enter mode you want (targeted or random): ")
+		mode, _ = reader.ReadString('\n')
+
+		//strip whitespace from user input
+		mode = strings.TrimSpace(mode)
+
+		match, _ := regexp.MatchString("random|targeted", mode)
+		if match {
+			break
+		} else {
+			util.FormatPrint("You need to pick either random or targeted")
+			fmt.Printf("You printed %v", mode)
+		}
+	}
+	return mode
+}
+
+//use stdinput to ask for index to exercise
+func askForExercise(language string) int {
+	numExercise := 0 //default to first
+	exercisesPath := fmt.Sprintf("./languages/%v/exercises_itemized", language)
+	files, err := ioutil.ReadDir(exercisesPath)
+	util.CheckErr(err)
+
+	//print out all the files
+	for idx, file := range files {
+		fmt.Printf("[%d]: %v \n", idx, file.Name())
+	}
+
+	for { //iterate until the number is between bounds
+		reader := bufio.NewReader(os.Stdin)
+
+		fmt.Print("Enter number of exercise that you want to practice: ")
+		numExerciseString, err := reader.ReadString('\n')
+		numExercise, err = strconv.Atoi(strings.Split(numExerciseString, "\n")[0])
+
+		if err != nil {
+			util.FormatPrint("That isn't a valid number!")
+		}
+
+		if numExercise < 0 || numExercise > len(files)-1 {
+			util.FormatPrint("You need to pick a valid exercise!")
+		} else {
+			break
+		}
+	}
+	return numExercise
 }
 
 //use stdinput to ask for a number of Exercises to practice
@@ -79,6 +150,77 @@ func askForLanguage() string {
 		}
 	}
 	return language
+}
+
+func makeExercise(numExercise int, language string) {
+	//get fileSuffix
+	fileSuffix := util.GetFileSuffix(language)
+
+	//create directory and files
+	filePaths := createFiles(fileSuffix)
+
+	//read exercises
+	exercisesPath := fmt.Sprintf("./languages/%v/exercises_itemized", language)
+	files, err := ioutil.ReadDir(exercisesPath)
+	util.CheckErr(err)
+
+	//Open exercise and test files for writing
+
+	exerciseFile, err := os.OpenFile(filePaths.exerciseFile, os.O_RDWR, 0666)
+	util.CheckErr(err)
+	defer exerciseFile.Close()
+	testFile, err := os.OpenFile(filePaths.testFile, os.O_RDWR, 0666)
+	util.CheckErr(err)
+	defer testFile.Close()
+	solnFile, err := os.OpenFile(filePaths.solnsFile, os.O_RDWR, 0666)
+	util.CheckErr(err)
+	defer solnFile.Close()
+
+	initFiles(language, exerciseFile, testFile, solnFile)
+
+	// add exercises and tests to file
+	fileName := files[numExercise].Name()
+
+	//read exercise file
+	exercise, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_itemized/%v", language, fileName))
+	util.CheckErr(err)
+
+	// read exercise test file
+	split := strings.Split(fileName, ".")
+	testName := fmt.Sprintf("%v_test%v", split[0], fileSuffix)
+	test, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_test/%v", language, testName))
+	util.CheckErr(err)
+
+	//read exercise soln file
+	solnName := fmt.Sprintf("%v_soln%v", split[0], fileSuffix)
+	soln, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_solutions/%v", language, solnName))
+
+	//check to make sure files are being read correctly
+	fmt.Println("Exercises and Tests for", fileName)
+
+	_, err = exerciseFile.Write(exercise)
+	util.CheckErr(err)
+	_, err = exerciseFile.Write([]byte("\n \n"))
+	util.CheckErr(err)
+	_, err = testFile.Write(test)
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("\n \n"))
+	util.CheckErr(err)
+	_, err = solnFile.Write(soln)
+	util.CheckErr(err)
+	_, err = solnFile.Write([]byte("\n \n"))
+	util.CheckErr(err)
+
+	switch language {
+	case "c":
+		finishTestFileC(testFile)
+	case "elixir":
+		finishTestFileElixir(testFile)
+	case "python":
+		finishTestFilePython(testFile)
+	}
+	createHelperFile(fileSuffix)
+	createMakeFile()
 }
 
 func makeExercises(numExercises int, language string) {
@@ -154,7 +296,7 @@ func makeExercises(numExercises int, language string) {
 	case "python":
 		finishTestFilePython(testFile)
 	}
-
+	createHelperFile(fileSuffix)
 	createMakeFile()
 }
 
@@ -228,6 +370,19 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 		initFilesOcaml(exerciseFile, testFile, solnFile)
 	case "javascript":
 		initFilesJavascript(exerciseFile, testFile, solnFile)
+	}
+}
+
+func createHelperFile(fileSuffix string) {
+	src := fmt.Sprintf("./util/helper/helper%v", fileSuffix)
+	dst := fmt.Sprintf("./do_some_exercises/helper%v", fileSuffix)
+	if fileSuffix != ".py" {
+		return
+	}
+	cpCmd := exec.Command("cp", "-rf", src, dst)
+	err := cpCmd.Run()
+	if err != nil {
+		util.CheckErr(err)
 	}
 }
 
