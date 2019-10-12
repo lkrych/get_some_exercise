@@ -5,10 +5,7 @@ class Node():
 
 class LinkedList():
     def __init__(self, data):
-        if type data is List: #stub out until you know proper syntax
-            self.root = self.create_ll_arr(data)
-        else
-            self.root = self.create_ll_node(data)
+        self.root = self.create_ll_from_arr(data)
         self.data = data
     
     def create_ll_from_arr(self, arr):
@@ -19,3 +16,4 @@ class LinkedList():
             current_node.next = new_node
             new_node = current_node
         return root
+
