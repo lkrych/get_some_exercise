@@ -17,3 +17,9 @@ class LinkedList():
             new_node = current_node
         return root
 
+def create_arr_from_ll(node):
+        data = []
+        while node:
+            data.append(node.val)
+            node = node.next
+        return data
