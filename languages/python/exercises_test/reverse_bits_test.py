@@ -4,7 +4,7 @@ class TestReverseBits(unittest.TestCase):
         Test that reverse_bits can handle small integers
         """
         result = reverse_bits(5)
-        self.assertEqual(result, 1)
+        self.assertEqual(result, 5)
 
     def test_6(self):
         """
