@@ -23,5 +23,5 @@ class TestMultiply(unittest.TestCase):
         """
         Test that multiply can handle larger integers
         """
-        result = multiply(65536 * 4)
+        result = multiply(65536, 4)
         self.assertEqual(result, 262144)
