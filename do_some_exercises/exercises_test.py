@@ -2,22 +2,33 @@ import unittest
 
 from exercises import *
 
-class TestBubbleSort(unittest.TestCase):
-    def test_small_list(self):
+class TestMultiply(unittest.TestCase):
+    def test_5(self):
         """
-        Test that it can sort a small list of integers
+        Test that multiply can handle small integers
         """
-        data = [5, 6, 4, 3, 2, 1,]
-        result = bubble_sort(data)
-        self.assertEqual(result, [1,2,3,4,5,6])
+        result = multiply(5, 6)
+        self.assertEqual(result, 30)
 
-    def test_bigger_list(self):
+    def test_6(self):
         """
-        Test that it can sort a bigger list of integers
+        Test that multiply can handle small integers
         """
-        data = [5, 6, 4, 3, 7, 8, 9, 2, 1, 10]
-        result = bubble_sort(data)
-        self.assertEqual(result, [1,2,3,4,5,6,7,8,9,10])
+        result = multiply(3, 8)
+        self.assertEqual(result, 24)
+
+    def test_8(self):
+        """
+        Test that multiply can handle small integers
+        """
+        result = multiply(8, 245)
+        self.assertEqual(result, 1960)
+    def test_65536(self):
+        """
+        Test that multiply can handle larger integers
+        """
+        result = multiply(65536, 4)
+        self.assertEqual(result, 262144)
  
 
 
