@@ -2,33 +2,22 @@ import unittest
 
 from exercises import *
 
-class TestMultiply(unittest.TestCase):
-    def test_5(self):
+class TestReverse(unittest.TestCase):
+    def test_small_list(self):
         """
-        Test that multiply can handle small integers
+        Test that it can sort a small list of integers
         """
-        result = multiply(5, 6)
-        self.assertEqual(result, 30)
+        data = [5, 6, 4, 3, 2, 1,]
+        reverse(data) #mutates data
+        self.assertEqual(data, [1,2,3,4,6,5])
 
-    def test_6(self):
+    def test_bigger_list(self):
         """
-        Test that multiply can handle small integers
+        Test that it can sort a bigger list of integers
         """
-        result = multiply(3, 8)
-        self.assertEqual(result, 24)
-
-    def test_8(self):
-        """
-        Test that multiply can handle small integers
-        """
-        result = multiply(8, 245)
-        self.assertEqual(result, 1960)
-    def test_65536(self):
-        """
-        Test that multiply can handle larger integers
-        """
-        result = multiply(65536, 4)
-        self.assertEqual(result, 262144)
+        data = [5, 6, 4, 3, 7, 8, 9, 2, 1, 10]
+        reverse(data) #mutates data
+        self.assertEqual(data, [10, 1, 2, 9, 8, 7, 3, 4, 6, 5])
  
 
 
