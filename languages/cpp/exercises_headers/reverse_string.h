@@ -1,1 +1,1 @@
-void reverseStr(string& str) 
+void reverseStr(std::string& str);

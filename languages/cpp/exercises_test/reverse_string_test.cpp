@@ -1,13 +1,15 @@
-#include <string>
+#include "string"
 
-TEST(ReverseStrTest, blahblah) {
+TEST(ReverseStrTest, Blahblah) {
 	std::string x = "blahblah";
     std::string reversedx ="halbhalb";
-	EXPECT_EQ(reverseStr(x), reversedx);
+	reverseStr(x);
+	EXPECT_TRUE(x == reversedx);
 }
 
-TEST(ReverseStrTest, racecar) {
+TEST(ReverseStrTest, Racecar) {
 	std::string x = "racecar";
     std::string reversedx ="racecar";
-	EXPECT_EQ(reverseStr(x), reversedx);
+	reverseStr(x);
+	EXPECT_TRUE(x == reversedx);
 }

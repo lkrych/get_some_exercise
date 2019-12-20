@@ -1,4 +1,7 @@
 //reverse a string in place
-void reverseStr(string& str) 
+#include <string>
+using namespace std;
+void reverseStr(std::string& str) 
 { 
 } 
+ 
