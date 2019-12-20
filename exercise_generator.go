@@ -135,17 +135,17 @@ func askForLanguage() string {
 	for { //iterate until language is picked
 		reader := bufio.NewReader(os.Stdin)
 
-		fmt.Print("Enter language you want to practice (python, go, c, elixir, ocaml, javascript): ")
+		fmt.Print("Enter language you want to practice (python, go, c, cpp, elixir, ocaml, javascript): ")
 		language, _ = reader.ReadString('\n')
 
 		//strip whitespace from user input
 		language = strings.TrimSpace(language)
 
-		match, _ := regexp.MatchString("python|go|c|elixir|ocaml|javascript|", language)
+		match, _ := regexp.MatchString("python|go|c|cpp|elixir|ocaml|javascript|", language)
 		if match {
 			break
 		} else {
-			util.FormatPrint("You need to pick either python, go, c, javascript, elixir, or ocaml")
+			util.FormatPrint("You need to pick either python, go, c, cpp, javascript, elixir, or ocaml")
 			fmt.Printf("You printed %v", language)
 		}
 	}
@@ -176,6 +176,11 @@ func makeExercise(numExercise int, language string) {
 	util.CheckErr(err)
 	defer solnFile.Close()
 
+	//make header
+	headerFile, err := os.Create("./do_some_exercises/exercises.h")
+	util.CheckErr(err)
+	defer headerFile.Close()
+
 	initFiles(language, exerciseFile, testFile, solnFile)
 
 	// add exercises and tests to file
@@ -194,6 +199,16 @@ func makeExercise(numExercise int, language string) {
 	//read exercise soln file
 	solnName := fmt.Sprintf("%v_soln%v", split[0], fileSuffix)
 	soln, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_solutions/%v", language, solnName))
+
+	//if language is cpp write exercise
+	if language == ".cpp" {
+		split := strings.Split(fileName, ".")
+		signatureName := fmt.Sprintf("%v%v", split[0], ".h")
+		functionSignature, err := ioutil.ReadFile(fmt.Sprintf("./languages/cpp/exercises_headers/%v", signatureName))
+		util.CheckErr(err)
+		_, err = headerFile.Write([]byte(functionSignature))
+		util.CheckErr(err)
+	}
 
 	//check to make sure files are being read correctly
 	fmt.Println("Exercises and Tests for", fileName)
@@ -214,6 +229,8 @@ func makeExercise(numExercise int, language string) {
 	switch language {
 	case "c":
 		finishTestFileC(testFile)
+	case "cpp":
+		finishTestFileCpp(testFile)
 	case "elixir":
 		finishTestFileElixir(testFile)
 	case "python":
@@ -251,6 +268,11 @@ func makeExercises(numExercises int, language string) {
 	util.CheckErr(err)
 	defer solnFile.Close()
 
+	//make header
+	headerFile, err := os.Create("./do_some_exercises/exercises.h")
+	util.CheckErr(err)
+	defer headerFile.Close()
+
 	initFiles(language, exerciseFile, testFile, solnFile)
 
 	// add exercises and tests to file
@@ -270,6 +292,16 @@ func makeExercises(numExercises int, language string) {
 		//read exercise soln file
 		solnName := fmt.Sprintf("%v_soln%v", split[0], fileSuffix)
 		soln, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_solutions/%v", language, solnName))
+
+		//if language is cpp write exercise
+		if language == ".cpp" {
+			split := strings.Split(fileName, ".")
+			signatureName := fmt.Sprintf("%v%v", split[0], ".h")
+			functionSignature, err := ioutil.ReadFile(fmt.Sprintf("./languages/cpp/exercises_headers/%v", signatureName))
+			util.CheckErr(err)
+			_, err = headerFile.Write([]byte(functionSignature))
+			util.CheckErr(err)
+		}
 
 		//check to make sure files are being read correctly
 		fmt.Println("Exercises and Tests for", fileName)
@@ -291,6 +323,8 @@ func makeExercises(numExercises int, language string) {
 	switch language {
 	case "c":
 		finishTestFileC(testFile)
+	case "cpp":
+		finishTestFileCpp(testFile)
 	case "elixir":
 		finishTestFileElixir(testFile)
 	case "python":
@@ -364,6 +398,8 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 		initFilesGo(exerciseFile, testFile, solnFile)
 	case "c":
 		initFilesC(exerciseFile, testFile, solnFile)
+	case "cpp":
+		initFilesCpp(exerciseFile, testFile, solnFile)
 	case "elixir":
 		initFilesElixir(exerciseFile, testFile, solnFile)
 	case "ocaml":
@@ -374,15 +410,15 @@ func initFiles(language string, exerciseFile, testFile, solnFile *os.File) {
 }
 
 func createHelperFile(fileSuffix string) {
-	src := fmt.Sprintf("./util/helper/helper%v", fileSuffix)
-	dst := fmt.Sprintf("./do_some_exercises/helper%v", fileSuffix)
-	if fileSuffix != ".py" {
-		return
-	}
-	cpCmd := exec.Command("cp", "-rf", src, dst)
-	err := cpCmd.Run()
-	if err != nil {
-		util.CheckErr(err)
+	//create helper for python or header for cpp
+	if fileSuffix == ".py" {
+		src := fmt.Sprintf("./util/helper/helper%v", fileSuffix)
+		dst := fmt.Sprintf("./do_some_exercises/helper%v", fileSuffix)
+		cpCmd := exec.Command("cp", "-rf", src, dst)
+		err := cpCmd.Run()
+		if err != nil {
+			util.CheckErr(err)
+		}
 	}
 }
 
@@ -425,6 +461,15 @@ func initFilesC(exerciseFile, testFile, solnFile *os.File) {
 	_, err = testFile.Write([]byte("int clean_suite(void) { return 0; }\n\n"))
 	util.CheckErr(err)
 	_, err = testFile.Write([]byte("/************* Your Code goes here **************/\n\n"))
+	util.CheckErr(err)
+}
+
+func initFilesCpp(exerciseFile, testFile, solnFile *os.File) {
+	_, err := testFile.Write([]byte("#include \"gtest/gtest.h\"\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("#include \"exercises.h\"\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("using namespace std;\n\n"))
 	util.CheckErr(err)
 }
 
@@ -480,6 +525,19 @@ func finishTestFileC(testFile *os.File) {
 
 }
 
+func finishTestFileCpp(testFile *os.File) {
+	_, err := testFile.Write([]byte("\n\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("int main(int argc, char **argv) {\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("\ttesting::InitGoogleTest(&argc, argv);\n\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("\treturn RUN_ALL_TESTS();\n"))
+	util.CheckErr(err)
+	_, err = testFile.Write([]byte("}\n"))
+	util.CheckErr(err)
+}
+
 func finishTestFilePython(testFile *os.File) {
 	_, err := testFile.Write([]byte("\n\n"))
 	util.CheckErr(err)
@@ -515,6 +573,10 @@ func createMakeFile() {
 	_, err = makeFile.Write([]byte("c:\n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("\tgcc exercises_test.c -lcunit -o test ./test \n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("cpp:\n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\tg++ exercises_test.cpp exercises.cpp -lgtest -lgtest_main -pthread -std=c++11 \n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("elixir:\n"))
 	util.CheckErr(err)
