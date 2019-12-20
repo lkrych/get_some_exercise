@@ -1,9 +1,10 @@
-#include <string>
+//reverse a string in place
+#include "string"
 using namespace std;
 void reverseStr(std::string& str) 
 { 
     int n = str.length(); 
-  
+    int i,j;
     // Swap character starting from two 
     // corners 
     for (int i = 0; i < n / 2; i++) 
