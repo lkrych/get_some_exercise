@@ -6,6 +6,9 @@ python:
 	python -m unittest exercises_test.py  
 c:
 	gcc exercises_test.c -lcunit -o test ./test 
+cpp:
+	g++ exercises_test.cpp exercises.cpp -lgtest -lgtest_main -pthread -std=c++11 -o test 
+	./test
 elixir:
 	elixir -r exercises.ex exercises_test.exs
 ocaml_build:
