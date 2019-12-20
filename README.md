@@ -18,6 +18,7 @@ To test your code, navigate into the `./do_some_exercises` folder and use the ma
 * JavaScript: `make javascript`
 * Python: `make python`
 * C: `make c` ~ no exercises yet
+* C++: `make cpp`
 * Elixir: `make elixir` ~ no exercises yet
 * OCAML: `make ocaml`
 
@@ -27,7 +28,7 @@ Fill in the exercises in `./do_some_exercises/exercises` until all your tests pa
 
 Each language you use in this repo has it's own dependencies. If you want to run the exercises you are going to need to install the languages and their dependencies. You do NOT need to install all of them. Just the ones you are going to use.
 
-I wrote this on a Mac. To get all the required dependencies, use homebrew
+I wrote this on a Mac. To get all the required dependencies, use homebrew or follow specific instructions (c++)
 
 ### js
 * `brew install node`
@@ -45,6 +46,9 @@ I wrote this on a Mac. To get all the required dependencies, use homebrew
 ### c
 * you need to install c if you don't have it
 * `brew install cunit` - C unit testing framework
+
+### c++
+* you need gtest installed, please follow the instructions on [stack overflow](https://stackoverflow.com/a/46611467)
 
 ## Want to add exercises to the languages that already exist?
 
