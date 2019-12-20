@@ -201,7 +201,7 @@ func makeExercise(numExercise int, language string) {
 	soln, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_solutions/%v", language, solnName))
 
 	//if language is cpp write exercise
-	if language == ".cpp" {
+	if language == "cpp" {
 		split := strings.Split(fileName, ".")
 		signatureName := fmt.Sprintf("%v%v", split[0], ".h")
 		functionSignature, err := ioutil.ReadFile(fmt.Sprintf("./languages/cpp/exercises_headers/%v", signatureName))
@@ -294,7 +294,7 @@ func makeExercises(numExercises int, language string) {
 		soln, err := ioutil.ReadFile(fmt.Sprintf("./languages/%v/exercises_solutions/%v", language, solnName))
 
 		//if language is cpp write exercise
-		if language == ".cpp" {
+		if language == "cpp" {
 			split := strings.Split(fileName, ".")
 			signatureName := fmt.Sprintf("%v%v", split[0], ".h")
 			functionSignature, err := ioutil.ReadFile(fmt.Sprintf("./languages/cpp/exercises_headers/%v", signatureName))
@@ -469,8 +469,6 @@ func initFilesCpp(exerciseFile, testFile, solnFile *os.File) {
 	util.CheckErr(err)
 	_, err = testFile.Write([]byte("#include \"exercises.h\"\n"))
 	util.CheckErr(err)
-	_, err = testFile.Write([]byte("using namespace std;\n\n"))
-	util.CheckErr(err)
 }
 
 func initFilesElixir(exerciseFile, testFile, solnFile *os.File) {
@@ -576,7 +574,9 @@ func createMakeFile() {
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("cpp:\n"))
 	util.CheckErr(err)
-	_, err = makeFile.Write([]byte("\tg++ exercises_test.cpp exercises.cpp -lgtest -lgtest_main -pthread -std=c++11 \n"))
+	_, err = makeFile.Write([]byte("\tg++ exercises_test.cpp exercises.cpp -lgtest -lgtest_main -pthread -std=c++11 -o test \n"))
+	util.CheckErr(err)
+	_, err = makeFile.Write([]byte("\t./test\n"))
 	util.CheckErr(err)
 	_, err = makeFile.Write([]byte("elixir:\n"))
 	util.CheckErr(err)
