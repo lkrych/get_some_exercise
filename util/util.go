@@ -16,6 +16,8 @@ func GetFileSuffix(language string) string {
 		return ".go"
 	case "c":
 		return ".c"
+	case "cpp":
+		return ".cpp"
 	case "elixir":
 		return ".ex"
 	case "ocaml":

@@ -7,6 +7,8 @@ def get_file_suffix(lang):
     return ".go"
   elif lang == "c":
     return ".c"
+  elif lang == "cpp":
+    return ".cpp"
   elif lang == "elixir":
     return ".ex"
   elif lang == "ocaml":

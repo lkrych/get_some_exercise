@@ -23,7 +23,7 @@ func getName(r *bufio.Reader) string {
 	util.CheckErr(err)
 	for {
 		util.PrintSpace()
-		fmt.Printf("Are you sure you want to call your exericise: %v y/n ", name)
+		fmt.Printf("Are you sure you want to call your exercise: %v y/n ", name)
 		yesOrNo, err := r.ReadString('\n')
 		util.CheckErr(err)
 
