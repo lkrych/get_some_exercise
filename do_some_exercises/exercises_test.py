@@ -2,46 +2,31 @@ import unittest
 
 from exercises import *
 
-class TestIntPal(unittest.TestCase):
-    def test_5(self):
-        """
-        Test that int_palindrome can handle small integers
-        """
-        result = int_palindrome(5)
-        self.assertEqual(result, True)
+import random
+random.seed(30)
 
-    def test_66(self):
+class TestNonUniformRandom(unittest.TestCase):
+    def test_1(self):
         """
-        Test that int_palindrome can handle small integers
+        Test that nonuniform_random_number can handle small integers
         """
-        result = int_palindrome(66)
-        self.assertEqual(result, True)
+        result = nonuniform_random_number([3, 5, 7, 11], [9/18,6/18,2/18,1/18])
+        self.assertEqual(result, 5)
 
-    def test_84(self):
+    def test_2(self):
         """
-        Test that int_palindrome can handle small integers
+        Test that nonuniform_random_number can handle small integers
         """
-        result = int_palindrome(84)
-        self.assertEqual(result, False)
-    def test_65536(self):
-        """
-        Test that int_palindrome can handle larger integers
-        """
-        result = int_palindrome(65536)
-        self.assertEqual(result, False)
-    def test_65556(self):
-        """
-        Test that int_palindrome can handle larger integers
-        """
-        result = int_palindrome(65556)
-        self.assertEqual(result, True)
+        result = nonuniform_random_number([3, 5, 7, 11, 13], [9/18,6/18,1/18,1/18, 1/18])
+        self.assertEqual(result, 3)
 
-    def test_10000000000001(self):
+    def test_3(self):
         """
-        Test that int_palindrome can handle larger integers
+        Test that nonuniform_random_number can handle small integers
         """
-        result = int_palindrome(10000000000001)
-        self.assertEqual(result, True)
+        result = nonuniform_random_number([3, 5], [9/18,9/18])
+        self.assertEqual(result, 3)
+
  
 
 

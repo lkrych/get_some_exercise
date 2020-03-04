@@ -1,20 +1,13 @@
-import math
-def int_palindrome(x: int) -> bool:
-    if x < 0:
-        return False
-    while x > 0:
-        number_of_digits = int(math.log10(x)) + 1
-        mask = 10 ** number_of_digits
-        #compare least significant digit and most significant digit
-        lsd = x % 10
-        msd = x % mask
-        if lsd != msd:
-            return False
-        
-        #shave off last digit and first digit
-        x = x % mask
-        x = x // 10
-        
-    return True
+from typing import List
+import bisect
+import itertools
+import random
+# 1. create an array of cumulative sums of the probabilities
+# 2. generate a random number and use binary search to return where it would be placed in array
+# 3. use index to profit
 
+def nonuniform_random_number(values: List[int], probabilities: List[float]) -> int:
+    cumulative_sums = [0.0] + list(itertools.accumulate(probabilities))
+    idx = bisect.bisect(cumulative_sums, random.random()) - 1
+    return values[idx]
  
